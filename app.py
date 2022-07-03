@@ -13,8 +13,8 @@ app = Flask(__name__)
 
 #connect Mongo using Pymongo:
 #our app will connect to Mongo using uri (uniform resource identifier, which is like a url)
-app.config["MONGO_URI"]="mongod://localhost:27017/mars_app" #uri says app can reach mongo through our local server, using port 27017 and a database named "mars_app"
-mongo = Pymongo(app)
+app.config["MONGO_URI"]="mongodb://localhost:27017/mars_app" #uri says app can reach mongo through our local server, using port 27017 and a database named "mars_app"
+mongo = PyMongo(app)
 
 
 #main HTML page flask route
@@ -49,4 +49,6 @@ def scrape():
 
 #need these last to lines to tell flask to run
 if __name__ == "__main__":
-   app.run() #debug=true inside parentheses if developing
+   app.run(debug=True) #debug=true inside parentheses if developing
+
+#to run this file, go to pythondata environment, get into folder and type: python app.py
