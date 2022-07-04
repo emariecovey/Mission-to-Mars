@@ -27,6 +27,7 @@ def scrape_all():
         "news_paragraph": news_paragraph, 
         "featured_image": featured_image(browser),
         "facts": mars_facts(),
+        "hemispheres": hemisphere_image(browser),
         "last_modified": dt.datetime.now()
     }
 
@@ -37,7 +38,34 @@ def scrape_all():
 
 
 
+### Image and title dictionary scraping
 
+def hemisphere_image(browser):
+    
+    url = 'https://marshemispheres.com/'
+    browser.visit(url)
+
+    hemisphere_image_urls = []
+
+    links = browser.find_by_css('a.product-item img')
+
+    for i in range(len(links)):
+        #adding dictionary
+        hemisphere_dict = {}
+        #click on each item
+        browser.find_by_css('a.product-item img')[i].click()
+        #1. extract the href (image link)
+        sample_elem = browser.links.find_by_text('Sample').first
+        #adding links to dictionary
+        hemisphere_dict["img_url"]=sample_elem["href"]
+        #2. adding image titles
+        hemisphere_dict["title"]=browser.find_by_css("h2.title").text
+        #append dictionary to list
+        hemisphere_image_urls.append(hemisphere_dict)
+        #going back after clicking (so that you can restart loop again)
+        browser.back()
+    
+    return hemisphere_image_urls
 
 
 # ## article scraping
